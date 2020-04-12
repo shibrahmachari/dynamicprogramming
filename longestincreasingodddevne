@@ -1,0 +1,39 @@
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+ { int a[]={1, 12, 2, 22, 5, 30, 31, 14, 17, 11};
+ int n= sizeof(a)/sizeof(int);
+ int dp[n];
+ dp[0]=1;
+ int res=dp[0];
+ bool even;
+  for(int i=1;i<n;i++){
+       if(a[i]%2==0){
+           even=true;
+       }
+       else{
+           even=false;
+       }
+       int temp=INT_MIN;
+       for(int j=0;j<i;j++){
+       if(even){
+         if(a[j]<a[i]&&a[j]%2!=0){
+             temp=max(temp,dp[j]);
+         }  
+       }   
+       else if(!even){
+            if(a[j]<a[i]&&a[j]%2==0){
+             temp=max(temp,dp[j]);
+         }  
+          }
+       }
+       if(temp!=INT_MIN){
+           dp[i]=1+temp;
+       }else{
+           dp[i]=1;
+       }
+       res=max(res,dp[i]);
+   }
+cout<<res;
+	return 0;
+}
