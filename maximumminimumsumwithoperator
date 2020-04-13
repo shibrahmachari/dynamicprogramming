@@ -1,0 +1,64 @@
+#include<bits/stdc++.h>
+using namespace std;
+bool isoperator(char a){
+    if(a=='+'||a=='*'){
+        return true;
+    }
+    return true;
+}
+int main(){
+    string s="1+2*3+4*5"; 
+    int n= s.size();
+    vector<int> num;
+    vector<char> ope;
+    string t="";
+    for(int i=0;i<n;i++){
+        if(isoperator(s[i])){
+            ope.push_back(s[i]);
+              num.push_back(atoi(t.c_str()));
+              t="";
+        }else{
+          t+=s[i];
+        }
+    }
+    int maxdp[n][n];
+    memset(maxdp, 0, sizeof(maxdp));
+    int mindp[n][n];
+     memset(mindp, INT_MAX, sizeof(mindp));
+    for(int i=0;i<n;i++){
+        maxdp[i][i]= num[i];
+        mindp[i][i]= num[i];
+    }
+    for(int i=0;i<n-1;i++){
+        if(ope[i]=='+'){
+            maxdp[i][i+1]= num[i]+num[i+1];
+               mindp[i][i+1]= num[i]+num[i+1];
+        }
+        else if(ope[i]=='*'){
+            maxdp[i][i+1]=num[i]* num[i+1];
+            mindp[i][i+1]=num[i]* num[i+1];
+        }
+    }
+    for(int gap=2;gap<n;gap++){
+        for(int i=0;i<n-gap;i++){
+            int j=i+gap;
+            for(int k=i;k<j;k++){
+                   int mintemp= 0;
+            int maxtemp= 0;
+                if(ope[k]=='+'){
+                    mintemp= mindp[i][k]+mindp[k+1][j];
+                      maxtemp= maxdp[i][k]+maxdp[k+1][j];
+                }
+                else if(ope[k]=='*'){
+                    mintemp= mindp[i][k]*mindp[k+1][j];
+                    maxtemp= maxdp[i][k]*maxdp[k+1][j];
+                }
+             maxdp[i][j]= max(maxtemp, maxdp[i][j]);
+            mindp[i][j]=min(mintemp, mindp[i][j]);
+            }
+     
+        }
+    }
+    cout<<"max"<<maxdp[0][n-1]<<endl;
+    cout<<"min"<<mindp[0][n-1]<<endl;
+}
