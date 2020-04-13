@@ -21,6 +21,7 @@ int main(){
           t+=s[i];
         }
     }
+  num.push_back(stoi(t)); //last number
     int maxdp[n][n];
     memset(maxdp, 0, sizeof(maxdp));
     int mindp[n][n];
