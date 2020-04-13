@@ -4,7 +4,7 @@ bool isoperator(char a){
     if(a=='+'||a=='*'){
         return true;
     }
-    return true;
+    return false;
 }
 int main(){
     string s="1+2*3+4*5"; 
@@ -15,7 +15,7 @@ int main(){
     for(int i=0;i<n;i++){
         if(isoperator(s[i])){
             ope.push_back(s[i]);
-              num.push_back(atoi(t.c_str()));
+              num.push_back(stoi(t));
               t="";
         }else{
           t+=s[i];
